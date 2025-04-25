@@ -1,1 +1,142 @@
-# MYPROJECTS
+# PROJECT 1
+
+# CI/CD Pipeline with GitHub Actions & Docker (No Cloud Needed)
+
+
+Automate Code Deployment Using CI/CD Pipeline (GitHub Actions) • Objective: Set up a CI/CD pipeline to build and deploy a web app. In this project, we leverage Jenkins to create a robust CI/CD pipeline that integrates tools like Docker, and OWASP Dependency Check to deliver secure and high-quality software. Tools used:
+
+1.GitHub
+
+2.Jenkins
+
+3.Docker Hub
+
+4.Docker
+
+5.nodeJS
+
+6.minikube
+
+GITHUB: GitHub is a platform for hosting and sharing code using Git. It helps developers collaborate by tracking changes, managing versions, and reviewing code. You can create repositories(repos) to store and organize projects. It also offers features like issue tracking and CI/CD workflows.
+
+JENKINS: Jenkins is an automation tool for building and deploying software. It uses pipelines to automate tasks like testing, building, and deploying code. It supports plugins to integrate with various tools. Jenkins makes Continuous Integration and Continuous Delivery (CI/CD) easy.
+
+DOCKER: Docker is a tool to create, share, and run lightweight virtualized environments called containers. Containers package code and dependencies together for consistent behavior across systems. It simplifies app deployment and avoids “it works on my machine” issues. Docker images are reusable blueprints for containers.
+
+NODE.JS: Node.js is a runtime that lets you run JavaScript outside the browser. It’s great for building fast and scalable server-side applications. Node.js uses non-blocking, event-driven programming for high performance. It’s commonly used for web servers, APIs, and real-time apps.
+
+CI/CD WORKFLOW: • The pipeline automates build, test, and deploy processes, making it efficient and reliable. • Security and quality checks are seamlessly integrated into the pipeline, ensuring every release is both secure and robust.
+
+Minikube:
+
+Minikube is a tool that lets you run Kubernetes locally. It creates a single-node Kubernetes cluster inside a virtual machine or container on your local system, making it perfect for developers and learners to test, experiment, and build Kubernetes applications in a safe environment.
+
+CI/CD WORKFLOW: • The pipeline automates build, test, and deploy processes, making it efficient and reliable. • Security and quality checks are seamlessly integrated into the pipeline, ensuring every release is both secure and robust.
+
+In Jenkins, webhooks are commonly used to trigger Jenkins jobs based on events occurring in external systems, such as GitHub, GitLab, or Bitbucket. Webhooks allow Jenkins to automatically start a build when certain events, like code pushes, pull requests, or branch updates, happen on the external system
+
+In Jenkins, webhooks are commonly used to trigger Jenkins jobs based on events occurring in external systems, such as GitHub, GitLab, or Bitbucket. Webhooks allow Jenkins to automatically start a build when certain events, like code pushes, pull requests, or branch updates, happen on the external system.
+
+ ## Setting up Webhooks in Jenkins:
+ 
+Install the necessary plugins: To use webhooks, ensure you have the appropriate plugins installed in Jenkins. For Git-based systems, this typically involves:
+
+GitHub Plugin
+
+GitLab Plugin
+
+Bitbucket Plugin 
+
+These plugins handle the integration between Jenkins and the respective platform.
+
+Create or configure a Jenkins job: You’ll need to create or configure a Jenkins job (usually a pipeline or freestyle job) that will be triggered by the webhook. This job typically contains the steps that Jenkins will execute when the event occurs.
+
+Configure the webhook on your external system (e.g., GitHub):
+
+For GitHub, go to the repository’s settings > Webhooks > Add webhook.
+In the Payload URL, enter the Jenkins webhook URL. This will generally be something like:
+~~~bash
+http://<jenkins-server>/github-webhook/
+~~~
+Set the content type to application/json.
+
+Choose which events should trigger the webhook (e.g., push events, pull requests, etc.).
+
+Finally, save the webhook.
+
+Configure Jenkins to handle the webhook: Jenkins will need to listen for incoming webhooks, and this is usually done using the GitHub Plugin or GitLab Plugin. Once you have set up your Jenkins job:
+
+Go to the job configuration.
+Under Build Triggers, enable the trigger option that corresponds to the external service, such as GitHub hook trigger for GITScm polling or similar options for GitLab or Bitbucket.
+Test the webhook: Once everything is set up, push changes to the external system (e.g., commit code to GitHub). The webhook should notify Jenkins, and it should automatically trigger the configured job.
+
+Example: GitHub Webhook in Jenkins
+
+Install the GitHub plugin in Jenkins.
+
+Create a Jenkins job (e.g., a Freestyle or Pipeline job).
+
+In the Jenkins job configuration, under Build Triggers, check GitHub hook trigger for GITScm polling.
+
+Copy the webhook URL generated by Jenkins (it should look like: http://<your-jenkins-server>/github-webhook/).
+
+In your GitHub repository, navigate to Settings > Webhooks.
+
+Add a new webhook, set the Payload URL to the Jenkins webhook URL, and select the events that should trigger the webhook (usually "Push events").
+
+Save the webhook, and now Jenkins will automatically trigger a build whenever the selected event occurs on GitHub.
+
+### Use Cases:
+
+Continuous Integration (CI): Automatically trigger builds when new code is pushed.
+
+Pull Request Builds: Trigger builds when a pull request is created or updated.
+
+Branch Builds: Trigger builds when changes are made to specific branches.
+
+By using webhooks, you can integrate Jenkins with external platforms to automatically trigger builds and streamline your CI/CD pipeline.
+
+Explanation of the Pipeline:
+
+Agent: Runs on any available Jenkins agent.
+
+Environment: Defines variables like app name and Docker image tag (using build number).
+
+ ##3 Stages:
+ 
+Checkout: Pulls code from a Git repository (replace the URL with the actual repo).
+
+Build: Compiles and packages the app using Maven (assumed tech stack).
+
+Test: Runs unit tests and publishes results.
+
+Build Docker Image: Creates a Docker image for the app.
+
+Deploy to Staging: Runs the Docker container in a staging environment.
+
+Approval: Manual approval step before production deployment.
+
+Deploy to Production: Pushes the Docker image to a registry and deploys (simplified here).
+
+Post: Actions to run after the pipeline completes (e.g., cleanup, notifications).
+
+## Prerequisites:
+Jenkins server installed with necessary plugins (e.g., Git, Maven, Docker, Pipeline).
+
+Maven and Docker installed on the Jenkins agent.
+
+Access to a Git repository and Docker registry.
+
+Customization Notes:
+Replace the Git URL with Zomato’s actual repository.
+
+Adjust the build command (mvn clean package) if Zomato uses a different framework (e.g., Node.js, Python).
+
+Update deployment steps based on Zomato’s infrastructure (e.g., Kubernetes, AWS ECS).
+
+Add credentials for Git/Docker registry if required (use Jenkins credentials management).
+![images](https://github.com/user-attachments/assets/72bbcab9-b2a7-4abc-8f05-7a763a7fd274)
+![IMG_20250408_204552](https://github.com/user-attachments/assets/5a35f68f-45d7-4e52-adfa-a7998c3914c0)
+![IMG_20250408_204652](https://github.com/user-attachments/assets/c03cec5e-47fb-4e4f-b7b5-6df4747874a3)
+![IMG_20250408_204634](https://github.com/user-attachments/assets/700dd15e-9d79-458d-819c-ba6b42cc9b60)
+![images](https://github.com/user-attachments/assets/dadef7f1-b6c2-470d-94bf-11cb5f1e5457)
