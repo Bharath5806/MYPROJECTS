@@ -142,6 +142,9 @@ Add credentials for Git/Docker registry if required (use Jenkins credentials man
 ![images](https://github.com/user-attachments/assets/dadef7f1-b6c2-470d-94bf-11cb5f1e5457)
 
 
+
+
+
 # PROJECT 2
 
 ## Kubernetes-Based Canary Deployment with K3s and Istio
@@ -185,43 +188,21 @@ Imagine you are managing an e-commerce platform that serves thousands of users d
 ## Benefits of Canary Deployments
 
 
-Sign up
-
-Sign in
-
-
-
-overcast blog
-·
-Follow publication
-
-Canary Deployments in Kubernetes: An In-Depth Guide
-DavidW (skyDragon)
-DavidW (skyDragon)
-
-
-Follow
-11 min read
-·
-Mar 8, 2024
-
-Listen
-
-
-Share
-
-
 Canary deployments are a strategy to reduce the risk of introducing a new software version in production by slowly rolling out the change to a small subset of users before making it available to everybody.
 
 This technique allows developers and operations teams to monitor the new version’s performance and stability in a real-world environment with actual traffic, which helps in identifying any issues before they affect all users. Kubernetes, with its robust orchestration capabilities, provides an excellent platform for implementing canary deployments. This guide delves into the methodology, tools, and practices for executing canary deployments within a Kubernetes ecosystem.
 
 Understanding Canary Deployments
+
 The core idea behind a canary deployment is to deploy a new version of an application alongside the stable running version, but only direct a small percentage of the traffic to the new version. This approach is named after the “canary in a coal mine” concept, where canaries were used to provide early warning signals for dangerous conditions.
 
+
 Why Canary Deployments?
+
 Imagine you are managing an e-commerce platform that serves thousands of users daily. The platform is hosted on a Kubernetes cluster, and you’re planning to release a new version of the application that includes both a new user interface and several backend optimizations intended to improve page load times and checkout process efficiency.
 
 Benefits of Canary Deployments
+
 Reduced Risk: By gradually increasing the traffic to the new version, you minimize the impact of any potential issues.
 Real-world Testing: Canary deployments allow you to test new features or versions under real-world conditions without impacting all your users.
 Quick Rollback: If the new version exhibits any problematic behavior, you can quickly rollback to the previous version.
@@ -460,5 +441,32 @@ spec:
 
 This YAML snippet directs 20% of traffic to the canary and 80% to the stable version.
 
+### Understanding what happened 
+
+Stage 1:
+
+K8S_CANARY_ROLLOUT ensures that the workloads of canary variant (new version) should be deployed. But at this time, they still handle nothing, all traffic are handled by workloads of primary variant. The number of workloads for canary variant is configured to be 50% of the replicas number of primary varant.
+
+![example-canary-kubernetes-istio-stage-1](https://github.com/user-attachments/assets/28e3dd23-381a-4482-b9a6-24605cba1f29)
+
+Stage 2: K8S_TRAFFIC_ROUTING ensures that 20% of traffic should be routed to canary variant and 80% to primary variant. Because the trafficRouting is configured to use Istio, PipeCD will find Istio’s VirtualService resource of this application to control the traffic percentage.
+
+![IMG_20250425_171420](https://github.com/user-attachments/assets/09ce6287-09ef-4000-8009-04330894cf81)
+
+Stage 3: WAIT_APPROVAL waits for a manual approval from someone in your team.
+
+Stage 4: K8S_PRIMARY_ROLLOUT ensures that all resources of primary variant will be updated to the new version.
+
+![IMG_20250425_171420](https://github.com/user-attachments/assets/a5a05a6b-7eab-4747-bad6-e13d597944bc)
+
+
+Stage 5: K8S_TRAFFIC_ROUTING ensures that all traffic should be routed to primary variant. Now primary variant is running the new version so it means all traffic is handled by the new version.
+
+![example-canary-kubernetes-istio-stage-1](https://github.com/user-attachments/assets/cad4e208-5007-4ddb-854e-7abc56d18175)
+
+Stage 6: K8S_CANARY_CLEAN ensures all created resources for canary variant should be destroyed.
+
+
+![example-canary-kubernetes-istio-stage-1](https://github.com/user-attachments/assets/6e6e249b-b3b5-4afc-a8a3-8e89783fbff9)
 
 
