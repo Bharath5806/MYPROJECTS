@@ -332,7 +332,7 @@ kind: Deployment
 metadata:
   name: myapp-canary
 spec:
-  replicas: 1 # Start small
+  replicas: 1 
   selector:
     matchLabels:
       app: myapp
