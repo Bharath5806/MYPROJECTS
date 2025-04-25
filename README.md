@@ -231,67 +231,75 @@ The changes are significant and, while tested in development and staging environ
 
 Canary deployments allow for the gradual rollout of new application versions, facilitating real-world testing and risk mitigation. While Kubernetes does not offer a built-in canary deployment feature, its flexible architecture supports implementing this strategy using Deployments, Services, and Ingress controllers.
 
-### Step 1: Preparing Your Environment
+### Step 1: Preparing our Environment
 
 Before you start, ensure that your Kubernetes cluster is operational and accessible. Install kubectl, the Kubernetes command-line tool, and configure it to communicate with your cluster. A solid understanding of Kubernetes concepts such as Deployments and Services is also crucial.
 
 ### Step 2: Deploying the Stable Version
 
 
-Deploy the current stable version of your application to serve as the baseline for the canary deployment.
+Deploy the current stable version of our application to serve as the baseline for the canary deployment.
 
-### Deployment and Service for Stable Version
-
-
-overcast blog
-·
-Follow publication
-
-Canary Deployments in Kubernetes: An In-Depth Guide
-DavidW (skyDragon)
-DavidW (skyDragon)
-
-
-Follow
-11 min read
-·
-Mar 8, 2024
-
-Listen
-
-
-Share
+### Deployment and Service for Stable Version 
 
 
 Canary deployments are a strategy to reduce the risk of introducing a new software version in production by slowly rolling out the change to a small subset of users before making it available to everybody.
 
 This technique allows developers and operations teams to monitor the new version’s performance and stability in a real-world environment with actual traffic, which helps in identifying any issues before they affect all users. Kubernetes, with its robust orchestration capabilities, provides an excellent platform for implementing canary deployments. This guide delves into the methodology, tools, and practices for executing canary deployments within a Kubernetes ecosystem.
 
-Understanding Canary Deployments
+## Understanding Canary Deployments
+
+
 The core idea behind a canary deployment is to deploy a new version of an application alongside the stable running version, but only direct a small percentage of the traffic to the new version. This approach is named after the “canary in a coal mine” concept, where canaries were used to provide early warning signals for dangerous conditions.
 
-Why Canary Deployments?
+## Why Canary Deployments?
+
+
 Imagine you are managing an e-commerce platform that serves thousands of users daily. The platform is hosted on a Kubernetes cluster, and you’re planning to release a new version of the application that includes both a new user interface and several backend optimizations intended to improve page load times and checkout process efficiency.
 
-Benefits of Canary Deployments
-Reduced Risk: By gradually increasing the traffic to the new version, you minimize the impact of any potential issues.
-Real-world Testing: Canary deployments allow you to test new features or versions under real-world conditions without impacting all your users.
-Quick Rollback: If the new version exhibits any problematic behavior, you can quickly rollback to the previous version.
+## Benefits of Canary Deployments
+
+
+### Reduced Risk: 
+By gradually increasing the traffic to the new version, you minimize the impact of any potential issues.
+### Real-world Testing: 
+Canary deployments allow you to test new features or versions under real-world conditions without impacting all your users.
+### Quick Rollback: 
+
+If the new version exhibits any problematic behavior, you can quickly rollback to the previous version.
+
 The changes are significant and, while tested in development and staging environments, could behave differently under the load and variety of real-world use. An immediate full-scale rollout risks impacting the user experience negatively if unforeseen issues arise, potentially leading to lost sales and damage to the company’s reputation.
 
-By employing a canary deployment strategy, you can:
+By employing a canary deployment strategy, we can:
 
-Minimize Risk: Gradually roll out the update to a small percentage of users. This controlled approach allows you to monitor the new version in a production environment with real traffic, without affecting all users.
-Performance Monitoring: Specifically, you can observe the impact of backend optimizations on actual page load times and checkout efficiency across different geographies and devices, ensuring that the improvements meet your objectives.
-User Feedback: Collect feedback on the new interface from the subset of users. This feedback can be invaluable in identifying UX issues that weren’t caught during internal testing.
-Quick Rollback: If any issues are detected during the canary phase, you can quickly rollback the changes for the affected users, significantly reducing the potential negative impact on your user base and business.
+### Minimize Risk: 
+
+Gradually roll out the update to a small percentage of users. This controlled approach allows you to monitor the new version in a production environment with real traffic, without affecting all users.
+
+
+### Performance Monitoring: 
+
+Specifically, you can observe the impact of backend optimizations on actual page load times and checkout efficiency across different geographies and devices, ensuring that the improvements meet your objectives.
+
+
+### User Feedback: 
+
+Collect feedback on the new interface from the subset of users. This feedback can be invaluable in identifying UX issues that weren’t caught during internal testing.
+
+### Quick Rollback: 
+
+If any issues are detected during the canary phase, you can quickly rollback the changes for the affected users, significantly reducing the potential negative impact on your user base and business.
 Implementing Canary Deployments in Kubernetes
+
+
 Canary deployments allow for the gradual rollout of new application versions, facilitating real-world testing and risk mitigation. While Kubernetes does not offer a built-in canary deployment feature, its flexible architecture supports implementing this strategy using Deployments, Services, and Ingress controllers.
 
-Step 1: Preparing Your Environment
-Before you start, ensure that your Kubernetes cluster is operational and accessible. Install kubectl, the Kubernetes command-line tool, and configure it to communicate with your cluster. A solid understanding of Kubernetes concepts such as Deployments and Services is also crucial.
+Step 1: Preparing our Environment
+
+Before we start, ensure that your Kubernetes cluster is operational and accessible. Install kubectl, the Kubernetes command-line tool, and configure it to communicate with our cluster. A solid understanding of Kubernetes concepts such as Deployments and Services is also crucial.
 
 Step 2: Deploying the Stable Version
+
 Deploy the current stable version of your application to serve as the baseline for the canary deployment.
 
 Example Deployment and Service for Stable Version
@@ -367,7 +375,7 @@ To control traffic flow between the stable and canary versions, employ one of th
 
 ### Service Weights with Istio
 
-Using Istio, you can define a VirtualService to split traffic between your stable and canary deployments based on weights.
+Using Istio, we can define a VirtualService to split traffic between our stable and canary deployments based on weights.
 
 ### VirtualService Configuration
 
@@ -426,11 +434,11 @@ Utilize Prometheus or another monitoring tool to observe the performance and err
 ### Step 6: Finalizing the Rollout
 
 
-After thoroughly testing the canary version and confirming its stability and performance, proceed to roll out the new version across your cluster. Update the stable deployment to use the new version’s image and scale down or remove the canary deployment.
+After thoroughly testing the canary version and confirming its stability and performance, proceed to roll out the new version across our cluster. Update the stable deployment to use the new version’s image and scale down or remove the canary deployment.
 
 ### Service Mesh for Traffic Management
 
-Istio: Control traffic flow to your canary deployment in Istio with VirtualServices:
+Istio: Control traffic flow to our canary deployment in Istio with VirtualServices:
 
 ```bash 
 apiVersion: networking.istio.io/v1alpha3
